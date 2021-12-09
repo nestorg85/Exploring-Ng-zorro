@@ -1,0 +1,64 @@
+<h2>{{id ? 'Edit' : 'Create'}} Club</h2>
+
+<form id="club-from" nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Club Name</nz-form-label>
+    <nz-form-control [nzValidateStatus]="clubNameField.touched && clubNameField.invalid ? 'error': ''"
+                     [nzSpan]="12"
+                     (change)="clubNameField.clearValidators()"
+                     [nzErrorTip]="clubNameField.getError('custom') ?? 'Please input a valid club name!'">
+      <input type="text" nz-input formControlName="club_name" placeholder="Name of the club"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Club Address</nz-form-label>
+    <nz-form-control
+      [nzValidateStatus]="clubAddressField.touched && clubAddressField.invalid ? 'error': ''"
+      [nzSpan]="12" nzErrorTip="Please input a valid club address!">
+      <input type="text" nz-input formControlName="club_address" placeholder="Address of the club"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="member-wrapper" formArrayName="club_members">
+    <ng-container *ngFor="let memberForm of membersControls; let i = index">
+      <ng-container [formGroup]="memberForm">
+        <nz-divider></nz-divider>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>Member Name</nz-form-label>
+          <nz-form-control
+            [nzValidateStatus]="memberForm.get('name')?.touched &&memberForm.get('name')?.invalid ? 'error':''"
+            [nzSpan]="12" nzErrorTip="Please input a valid name!">
+            <input type="text" nz-input formControlName="name" placeholder="Member Name"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>Member Age</nz-form-label>
+          <nz-form-control
+            [nzValidateStatus]="memberForm.get('age')?.touched && memberForm.get('age')?.invalid ? 'error': ''"
+            [nzSpan]="12" nzErrorTip="Please input a valid age!">
+            <input type="number" nz-input formControlName="age" placeholder="Member Age"/>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12" class="text-center">
+      <button [disabled]="form.disabled" nz-button nzType="default" (click)="addMember()" type="button">
+        <i nz-icon nzType="plus-circle"></i>
+        Add member
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12" class="text-center">
+      <button [disabled]="form.disabled" nz-button nzSize="large" nzShape="round" type="submit" nzType="primary">
+        <i nz-icon nzType="save"></i>
+        Submit
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

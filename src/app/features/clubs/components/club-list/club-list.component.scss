@@ -1,0 +1,23 @@
+.member-column {
+  padding: 8px 0;
+}
+
+.member-title {
+  font-weight: bold;
+  text-align: center;
+}
+
+
+.title-wrapper {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding-bottom: 16px;
+}
+
+
+.message-alert {
+  max-width: 600px;
+  margin: 0 auto 16px auto;
+  text-align: center;
+}

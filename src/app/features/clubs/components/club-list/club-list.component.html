@@ -1,0 +1,50 @@
+<div class="title-wrapper">
+  <h2>Clubs List</h2>
+  <a nz-button nzType="primary" nzSize="large" nzShape="round" routerLink="create">
+    <i nz-icon nzType="plus-circle"></i>
+    Create Club
+  </a>
+</div>
+
+<nz-alert class="message-alert"
+  *ngIf="msgResult"
+  nzType="success"
+  nzCloseable
+  [nzMessage]="msgResult"
+></nz-alert>
+
+<nz-table #sortTable [nzData]="listOfData" [nzLoading]="loading" [nzPageSize]="5" nzTableLayout="fixed">
+  <thead>
+  <tr>
+    <th nzWidth="60px"></th>
+    <th *ngFor="let column of listOfColumn" [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
+      {{ column.title }}
+    </th>
+    <th nzWidth="100px">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let data of sortTable.data ?? []">
+    <tr>
+      <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+      <td>{{ data.club_name }}</td>
+      <td>{{ data.club_address }}</td>
+      <td>{{ data.total_members }}</td>
+      <td><a [routerLink]="['change',data.id]">Edit</a></td>
+    </tr>
+    <tr [nzExpand]="expandSet.has(data.id)">
+      <h3 class="member-title">Club Members</h3>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+        </tr>
+        <tr *ngFor="let member of data.club_members">
+          <td class="member-column">{{member.name}}</td>
+          <td class="member-column">{{member.age}}</td>
+        </tr>
+      </table>
+    <tr>
+  </ng-container>
+  </tbody>
+</nz-table>
